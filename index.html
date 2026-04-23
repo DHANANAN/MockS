@@ -4,32 +4,79 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Legalstaan Mock Portal</title>
-  <meta http-equiv="refresh" content="0; url=Vocab.html">
-  <script>
-    window.location.replace("Vocab.html");
-  </script>
   <style>
     body {
       margin: 0;
       min-height: 100vh;
-      display: grid;
-      place-items: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       font-family: Georgia, "Times New Roman", serif;
       background: #fbf6ec;
       color: #1a1308;
       padding: 24px;
       text-align: center;
     }
-    a {
+    .container {
+      background: #fffaf0;
+      border: 1px solid #d9c99e;
+      border-top: 6px solid #0e2341;
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border-radius: 4px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    h1 {
       color: #0e2341;
-      font-weight: 700;
+      margin-bottom: 30px;
+    }
+    .mock-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .mock-card {
+      display: block;
+      padding: 20px;
+      background: #f3e9d2;
+      border: 1px solid #c9a34e;
+      color: #0e2341;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+      border-radius: 4px;
+      transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    }
+    .mock-card:hover {
+      background: #0e2341;
+      color: #fbf6ec;
+      transform: scale(1.02);
+    }
+    .mock-subtitle {
+      font-size: 14px;
+      font-weight: normal;
+      margin-top: 8px;
+      opacity: 0.9;
     }
   </style>
 </head>
 <body>
-  <div>
-    <h1>Opening Legalstaan Mock Portal</h1>
-    <p>If you are not redirected automatically, continue to <a href="Vocab.html">Vocab.html</a>.</p>
+  <div class="container">
+    <h1>Legalstaan Mock Portal</h1>
+    <p>Select a mock test below to begin your examination.</p>
+    <div class="mock-list">
+      <a href="Vocab.html" class="mock-card">
+        JML / IP-Joint LL.M. Mock Test
+        <div class="mock-subtitle">100 MCQs | Pattern-matched to 2024 PYQ</div>
+      </a>
+    </div>
   </div>
 </body>
 </html>

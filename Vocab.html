@@ -171,7 +171,9 @@
   .btn {
     background: #0e2341; color: #fff; border: none; padding: 10px 16px;
     font-size: 12px; font-family: 'Courier New', monospace; letter-spacing: 1px; cursor: pointer;
+    transition: all 0.3s ease;
   }
+  .btn:hover { opacity: 0.9; transform: translateY(-1px); }
   .btn.alt { background: #2c5a3a; }
   .btn.warn { background: #8a3a1f; }
   .auth-msg { margin-top: 10px; font-size: 13px; color: #8a3a1f; }
@@ -191,7 +193,10 @@
   .choice {
     display: flex; gap: 8px; align-items: flex-start; background: #fff;
     border: 1px solid #e6d8b7; padding: 7px 9px;
+    transition: all 0.2s ease;
+    cursor: pointer;
   }
+  .choice:hover { background: #fbf6ec; border-color: #c9a34e; }
   .q.answered {
     border-left: 3px solid #2c5a3a;
     padding-left: 10px;
@@ -231,7 +236,9 @@
     border: 1px solid #d9c99e;
     border-left: 4px solid #0e2341;
     padding: 12px;
+    transition: all 0.3s ease;
   }
+  .subject-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
   .subject-card h4 {
     font-size: 15px;
     color: #0e2341;
@@ -398,29 +405,6 @@
   <button class="btn-print" onclick="window.print()">PRINT / SAVE PDF</button>
 </div>
 <div class="main">
-
-<div id="myResultPanel" class="results-panel app-hidden"></div>
-<div id="masterPanel" class="master-panel app-hidden"></div>
-
-<div id="queryPanel" class="query-panel app-hidden">
-  <h3>Query & Contact the Masters</h3>
-  <div>Use this section to send your question, feedback, or consultation request along with your result summary.</div>
-  <select id="querySubject">
-    <option value="General">General</option>
-    <option value="English">English</option>
-    <option value="Legal Reasoning">Legal Reasoning</option>
-    <option value="Intellectual Property Law">Intellectual Property Law</option>
-    <option value="Result Review">Result Review</option>
-  </select>
-  <textarea id="queryText" rows="5" placeholder="Type your query here..."></textarea>
-  <div class="report-actions">
-    <button id="addQueryBtn" class="btn alt" type="button">ADD QUERY</button>
-    <button id="emailMastersBtn" class="btn" type="button">EMAIL MASTERS</button>
-    <button id="downloadReportBtn" class="btn warn" type="button">DOWNLOAD REPORT</button>
-  </div>
-  <div class="email-note">The email draft will include your profile, score, subject-wise analysis, and saved queries. If your mail app cannot accept automatic attachments, use the downloaded report file alongside the draft.</div>
-  <div id="queryList" class="query-list"></div>
-</div>
 
 <div class="action-bar no-print">
   <button id="submitBtnSecondary" class="btn" type="button">SUBMIT TEST</button>
@@ -2043,6 +2027,29 @@
   <div class="sb">I, II, IV are correct &mdash; cybersquatting is actionable (<em>Yahoo! Inc. v. Akash Arora</em>; <em>Rediff.com v. Radiff</em>); Indian courts have applied passing-off (<em>Satyam Infoway v. Sifynet Solutions</em>); INDRP is the .IN administrative remedy. III is <b>wrong</b> &mdash; a descriptive domain can acquire distinctiveness through use and become protectable (e.g., mdindia.com, sifynet.com). So I, II, IV only &rarr; (A).</div>
 </div>
 
+<div id="myResultPanel" class="results-panel app-hidden"></div>
+<div id="masterPanel" class="master-panel app-hidden"></div>
+
+<div id="queryPanel" class="query-panel app-hidden">
+  <h3>Query & Contact the Masters</h3>
+  <div>Use this section to send your question, feedback, or consultation request along with your result summary.</div>
+  <select id="querySubject">
+    <option value="General">General</option>
+    <option value="English">English</option>
+    <option value="Legal Reasoning">Legal Reasoning</option>
+    <option value="Intellectual Property Law">Intellectual Property Law</option>
+    <option value="Result Review">Result Review</option>
+  </select>
+  <textarea id="queryText" rows="5" placeholder="Type your query here..."></textarea>
+  <div class="report-actions">
+    <button id="addQueryBtn" class="btn alt" type="button">ADD QUERY</button>
+    <button id="emailMastersBtn" class="btn" type="button">EMAIL MASTERS</button>
+    <button id="downloadReportBtn" class="btn warn" type="button">DOWNLOAD REPORT</button>
+  </div>
+  <div class="email-note">The email draft will include your profile, score, subject-wise analysis, and saved queries. If your mail app cannot accept automatic attachments, use the downloaded report file alongside the draft.</div>
+  <div id="queryList" class="query-list"></div>
+</div>
+
 <div class="copyright-bar">
   &copy; 2026 Legalstaan Ltd. All rights reserved. This mock paper and its layout are the intellectual property of Legalstaan Ltd.
 </div>
@@ -2576,6 +2583,11 @@ function submitTest() {
   showMyResults();
   if (currentSession.role === "master") showMasterPanel();
   renderQueryList();
+
+  setTimeout(() => {
+    const panel = document.getElementById("myResultPanel");
+    if (panel) panel.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 150);
 }
 
 function login() {
@@ -2642,8 +2654,14 @@ function wireEvents() {
   document.getElementById("logoutBtn").addEventListener("click", logout);
   document.getElementById("submitBtn").addEventListener("click", submitTest);
   document.getElementById("submitBtnSecondary").addEventListener("click", submitTest);
-  document.getElementById("myResultsBtn").addEventListener("click", showMyResults);
-  document.getElementById("myResultsBtnSecondary").addEventListener("click", showMyResults);
+  document.getElementById("myResultsBtn").addEventListener("click", () => {
+    showMyResults();
+    setTimeout(() => document.getElementById("myResultPanel").scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+  });
+  document.getElementById("myResultsBtnSecondary").addEventListener("click", () => {
+    showMyResults();
+    setTimeout(() => document.getElementById("myResultPanel").scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+  });
   document.getElementById("resetBtn").addEventListener("click", resetAnswers);
   document.getElementById("addQueryBtn").addEventListener("click", () => {
     if (!currentSession) return;

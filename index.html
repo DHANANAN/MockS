@@ -3,304 +3,361 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Legalstaan Mock Portal</title>
+  <title>Legalstaan — Mock Test Portal</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0e2341">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
-  <style>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-deep: #1a1a2e;
-      --bg-glass: rgba(30, 41, 59, 0.7);
-      --text-primary: #ffffff;
-      --text-secondary: #b0b0b0;
-      --accent-gold: #ffd700;
-      --accent-cyan: #00d2ff;
-      --card-border: rgba(255, 255, 255, 0.1);
-      --glow: rgba(0, 210, 255, 0.15);
+      --bg-color: #fbf6ec;
+      --text-color: #1a1308;
+      --primary-blue: #0e2341;
+      --primary-gold: #c9a34e;
+      --card-bg: #fffaf0;
+      --border-color: #d9c99e;
+      --pill-bg: #f3e9d2;
+      --hero-overlay: rgba(14, 35, 65, 0.85);
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --white: #ffffff;
+    }
+
+    body.dark-mode {
+      --bg-color: #0f172a;
+      --text-color: #e2e8f0;
+      --primary-blue: #1e293b;
+      --primary-gold: #f59e0b;
+      --card-bg: #1e293b;
+      --border-color: #334155;
+      --pill-bg: #334155;
+      --hero-overlay: rgba(15, 23, 42, 0.9);
+      --shadow: 0 10px 30px rgba(0,0,0,0.4);
+      --white: #1e293b;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    
+
     body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
       font-family: 'Outfit', sans-serif;
-      background: var(--bg-deep);
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(255, 215, 0, 0.03) 0%, transparent 40%);
-      color: var(--text-primary);
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: background 0.3s, color 0.3s;
       overflow-x: hidden;
+      background-image: 
+        linear-gradient(var(--border-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+      background-size: 25px 25px;
     }
 
-    header {
-      width: 100%;
-      padding: 20px 40px;
+    /* Navbar */
+    .nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--card-border);
-      position: sticky;
-      top: 0;
+      padding: 20px 60px;
+      position: absolute;
+      width: 100%;
       z-index: 100;
     }
-
-    .logo-box {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--accent-gold);
-      mask: url('icon.svg') no-repeat center;
-      -webkit-mask: url('icon.svg') no-repeat center;
-    }
-
-    .logo-text {
-      font-weight: 800;
+    .logo {
+      font-family: 'Playfair Display', serif;
       font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-gold);
       letter-spacing: 1px;
-      text-transform: uppercase;
-      background: linear-gradient(to right, var(--accent-gold), #fff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    }
+    .logo span { color: #fff; }
+
+    .mode-toggle {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      border-radius: 50px;
+      font-size: 13px;
+      transition: all 0.3s ease;
+    }
+    body.dark-mode .mode-toggle {
+      background: var(--pill-bg);
+      color: var(--text-color);
+      border-color: var(--border-color);
     }
 
-    .container {
-      flex: 1;
+    /* Hero */
+    .hero {
+      height: 85vh;
+      background: url('legalstaan_hero_mockup_1776983847291.png') center/cover no-repeat;
+      position: relative;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 60px 24px;
-      max-width: 1200px;
-      margin: 0 auto;
+      text-align: center;
+      color: #fff;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--hero-overlay);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      padding: 20px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 40px;
+      opacity: 0.9;
+      letter-spacing: 0.5px;
+    }
+    .cta-btn {
+      background: var(--primary-gold);
+      color: #000;
+      padding: 18px 40px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 16px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      box-shadow: 0 10px 20px rgba(201,163,78,0.3);
+      transition: all 0.3s ease;
+    }
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(201,163,78,0.4);
+    }
+
+    /* Stats */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin-top: -50px;
+      position: relative;
+      z-index: 2;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 30px 50px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
       text-align: center;
     }
+    .stat-card h3 { font-size: 32px; color: var(--primary-gold); }
+    .stat-card p { font-size: 14px; opacity: 0.7; margin-top: 5px; }
 
-    .hero-label {
-      font-weight: 600;
-      font-size: 14px;
-      color: var(--accent-cyan);
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 16px;
+    /* Mocks Section */
+    .section {
+      padding: 100px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-
-    h1 {
-      font-size: clamp(2.5rem, 8vw, 4.5rem);
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 24px;
-      text-transform: uppercase;
-      letter-spacing: -1px;
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
     }
-
-    .highlight {
-      color: var(--accent-gold);
-      position: relative;
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      color: var(--primary-blue);
+      margin-bottom: 15px;
     }
-
-    p {
-      font-size: 18px;
-      color: var(--text-secondary);
+    body.dark-mode .section-header h2 { color: var(--primary-gold); }
+    .section-header p {
       max-width: 600px;
-      margin-bottom: 48px;
-      line-height: 1.6;
+      margin: 0 auto;
+      opacity: 0.8;
     }
 
-    .mock-list {
+    .mock-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-      width: 100%;
-      perspective: 1000px;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
     }
-
     .mock-card {
-      background: var(--bg-glass);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border);
-      padding: 32px;
-      text-decoration: none;
+      background: var(--white);
+      border: 1px solid var(--border-color);
+      padding: 40px;
       border-radius: 16px;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.4s ease;
       position: relative;
       overflow: hidden;
     }
-
     .mock-card::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(to right, var(--accent-cyan), var(--accent-gold));
-      opacity: 0;
-      transition: opacity 0.3s;
+      top: 0; left: 0; width: 6px; height: 100%;
+      background: var(--primary-gold);
     }
-
     .mock-card:hover {
-      transform: translateY(-10px) scale(1.02);
-      border-color: rgba(0, 210, 255, 0.4);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--glow);
+      transform: translateY(-10px);
+      box-shadow: var(--shadow);
+      border-color: var(--primary-gold);
     }
-
-    .mock-card:hover::before {
-      opacity: 1;
+    .mock-card h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+      color: var(--primary-blue);
     }
-
-    .mock-title {
-      color: var(--text-primary);
-      font-weight: 700;
-      font-size: 22px;
-      line-height: 1.3;
+    body.dark-mode .mock-card h3 { color: var(--primary-gold); }
+    .mock-card p {
+      font-size: 15px;
+      line-height: 1.6;
+      opacity: 0.8;
+      margin-bottom: 20px;
     }
-
-    .mock-subtitle {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
-
-    .mock-meta {
-      display: flex;
-      gap: 12px;
-      margin-top: auto;
-    }
-
-    .meta-tag {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 4px 10px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      border-radius: 4px;
-      color: var(--accent-gold);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .btn-start {
-      margin-top: 12px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px 24px;
-      background: var(--text-primary);
-      color: #000;
-      font-weight: 800;
+    .mock-tag {
+      display: inline-block;
+      background: var(--pill-bg);
+      padding: 6px 14px;
       border-radius: 50px;
-      font-size: 14px;
-      text-transform: uppercase;
-      transition: all 0.3s;
-    }
-
-    .mock-card:hover .btn-start {
-      background: var(--accent-gold);
-      transform: translateX(5px);
-    }
-
-    .mode-toggle {
-      background: var(--bg-glass);
-      border: 1px solid var(--card-border);
-      color: var(--text-primary);
-      padding: 8px 16px;
-      cursor: pointer;
-      font-family: 'Outfit', sans-serif;
       font-size: 12px;
       font-weight: 600;
-      border-radius: 50px;
-      transition: all 0.3s;
+      color: var(--primary-blue);
     }
+    body.dark-mode .mock-tag { color: var(--text-color); }
 
-    .mode-toggle:hover {
-      background: var(--accent-gold);
-      color: #000;
-      border-color: var(--accent-gold);
+    /* Mentors */
+    .mentors {
+      background: var(--primary-blue);
+      color: #fff;
+      padding: 100px 60px;
+    }
+    .mentor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+    .mentor-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .mentor-card .name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary-gold);
+      margin-bottom: 5px;
+    }
+    .mentor-card .title {
+      font-size: 13px;
+      opacity: 0.8;
+      line-height: 1.4;
     }
 
     footer {
-      width: 100%;
-      padding: 40px;
+      padding: 60px;
       text-align: center;
-      font-size: 13px;
-      color: var(--text-secondary);
-      border-top: 1px solid var(--card-border);
-    }
-
-    /* Dark Mode specific overrides if needed, but the base is already dark */
-    body.light-mode {
-      --bg-deep: #f8fafc;
-      --bg-glass: rgba(255, 255, 255, 0.8);
-      --text-primary: #0f172a;
-      --text-secondary: #475569;
-      --card-border: rgba(0, 0, 0, 0.1);
-      --glow: rgba(0, 210, 255, 0.1);
+      border-top: 1px solid var(--border-color);
+      font-size: 14px;
+      opacity: 0.7;
     }
 
     @media (max-width: 768px) {
-      header { padding: 15px 20px; }
-      .container { padding: 40px 20px; }
-      h1 { font-size: 2.5rem; }
+      .nav { padding: 20px; }
+      .hero h1 { font-size: 36px; }
+      .stats { flex-direction: column; gap: 20px; padding: 0 20px; }
+      .section { padding: 60px 20px; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo-box">
-      <div class="logo-text">LEGALSTAAN</div>
-    </div>
+  <nav class="nav">
+    <div class="logo">Legal<span>staan</span></div>
     <button id="darkModeToggle" class="mode-toggle">🌙 DARK MODE</button>
-  </header>
+  </nav>
 
-  <div class="container">
-    <div class="hero-label">Excellence in Legal Education</div>
-    <h1>Master Your <span class="highlight">Mock</span> Exams</h1>
-    <p>Professional grade examination environment tailored for JML and IP-Joint Masters aspirants. Precision matched to the latest patterns.</p>
-    
-    <div class="mock-list">
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Building Lawyers Beyond Classrooms</h1>
+      <p>Master the AIET, CLAT, & MH Law CET with the most authentic mock examination series curated by NLU Alumni.</p>
+      <a href="#mocks" class="cta-btn">Start Mock Test</a>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat-card">
+      <h3>100+</h3>
+      <p>Curated MCQs</p>
+    </div>
+    <div class="stat-card">
+      <h3>NLU</h3>
+      <p>Alumni Mentorship</p>
+    </div>
+    <div class="stat-card">
+      <h3>24/7</h3>
+      <p>Query Support</p>
+    </div>
+  </section>
+
+  <section class="section" id="mocks">
+    <div class="section-header">
+      <h2>Premium Mock Series</h2>
+      <p>Designed to match the latest 2024-25 examination patterns with detailed analytical reporting.</p>
+    </div>
+
+    <div class="mock-grid">
       <a href="Vocab.html" class="mock-card">
-        <div class="mock-title">JML / IP-Joint LL.M. Mock Test</div>
-        <div class="mock-subtitle">A comprehensive full-length mock paper designed to simulate the actual intensity and pattern of the 2024 entrance examination.</div>
-        <div class="mock-meta">
-          <span class="meta-tag">100 MCQs</span>
-          <span class="meta-tag">120 MIN</span>
-          <span class="meta-tag">PYQ Pattern</span>
-        </div>
-        <div class="btn-start">BEGIN TEST →</div>
+        <h3>Joint Master’s LL.M. – IPR</h3>
+        <p>100 MCQs pattern-matched to JML 2024 PYQ. Covers English, Legal Reasoning, and IPR Law with extreme precision.</p>
+        <span class="mock-tag">AIET NLU DELHI</span>
       </a>
       
-      <!-- Placeholder for future mocks -->
-      <div class="mock-card" style="opacity: 0.5; cursor: not-allowed;">
-        <div class="mock-title">Legal Reasoning Intensive</div>
-        <div class="mock-subtitle">Specialized section-wise drill focusing on principle-fact and assertion-reasoning questions. Coming Soon.</div>
-        <div class="mock-meta">
-          <span class="meta-tag">50 MCQs</span>
-          <span class="meta-tag">60 MIN</span>
-          <span class="meta-tag">Locked</span>
-        </div>
+      <div class="mock-card" style="opacity: 0.6; cursor: not-allowed;">
+        <h3>MH LAW CET 2026</h3>
+        <p>Coming Soon. A dedicated preparation batch for 5-Year and 3-Year LL.B. aspirants.</p>
+        <span class="mock-tag">UPCOMING</span>
       </div>
     </div>
-  </div>
+  </section>
+
+  <section class="mentors">
+    <div class="section-header" style="color: #fff;">
+      <h2 style="color: var(--primary-gold);">Meet Your Mentors</h2>
+      <p>Learn from those who have already conquered the most prestigious law entrance exams.</p>
+    </div>
+    <div class="mentor-grid">
+      <div class="mentor-card">
+        <div class="name">Krishna Shelke</div>
+        <div class="title">PGIP-LL.M. Candidate, NLU Delhi<br>Alumnus, GLC Mumbai</div>
+      </div>
+      <div class="mentor-card">
+        <div class="name">Saniya Savant</div>
+        <div class="title">LL.M. Candidate, SMU Singapore<br>Alumna, NMIMS Mumbai</div>
+      </div>
+      <div class="mentor-card">
+        <div class="name">Alfaj Mushrif</div>
+        <div class="title">M.Sc. Finance, JBIMS Mumbai<br>Mechanical Engineer</div>
+      </div>
+      <div class="mentor-card">
+        <div class="name">Arya Anuj</div>
+        <div class="title">Joint Master’s (LL.M.), NLU Delhi<br>Alumnus, BHU</div>
+      </div>
+    </div>
+  </section>
 
   <footer>
-    &copy; 2026 Legalstaan Ltd. All rights reserved. Precision Legal Education.
+    <p>Copyright &copy; 2026 Legalstaan Ltd. All Rights Reserved.<br>Building Lawyers Beyond Classrooms.</p>
   </footer>
 
   <script>
@@ -309,32 +366,16 @@
 
     function updateBtn(isDark) {
       btn.innerHTML = isDark ? "☀️ LIGHT MODE" : "🌙 DARK MODE";
-      if (!isDark) {
-        document.body.classList.add("light-mode");
-        document.body.classList.remove("dark-mode");
-      } else {
-        document.body.classList.add("dark-mode");
-        document.body.classList.remove("light-mode");
-      }
     }
 
     function init() {
-      // Default to dark as per Legalstaan vibe
-      const saved = localStorage.getItem(DARK_MODE_KEY);
-      const isDark = saved === null ? true : saved === "true";
-      
-      if (isDark) {
-        document.body.classList.add("dark-mode");
-        document.body.classList.remove("light-mode");
-      } else {
-        document.body.classList.add("light-mode");
-        document.body.classList.remove("dark-mode");
-      }
+      const isDark = localStorage.getItem(DARK_MODE_KEY) === "true";
+      if (isDark) document.body.classList.add("dark-mode");
       updateBtn(isDark);
     }
 
     btn.addEventListener("click", () => {
-      const isDark = !document.body.classList.contains("dark-mode");
+      const isDark = document.body.classList.toggle("dark-mode");
       localStorage.setItem(DARK_MODE_KEY, isDark ? "true" : "false");
       updateBtn(isDark);
     });

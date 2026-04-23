@@ -11,48 +11,55 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
   :root {
-    --bg-color: #1a1a2e;
-    --text-color: #ffffff;
-    --primary-blue: #1e293b;
-    --primary-gold: #ffd700;
-    --accent-gold-bg: rgba(255, 215, 0, 0.1);
-    --card-bg: rgba(30, 41, 59, 0.7);
-    --border-color: rgba(255, 255, 255, 0.1);
-    --pill-bg: rgba(255, 255, 255, 0.05);
-    --pill-text: #ffffff;
-    --white: #1e293b;
-    --green: #22c55e;
-    --red: #ef4444;
-    --passage-bg: rgba(0, 0, 0, 0.2);
-    --choice-hover: rgba(255, 255, 255, 0.1);
-    --shadow: rgba(0, 0, 0, 0.3);
-    --accent-cyan: #00d2ff;
+    --bg-color: #fbf6ec;
+    --text-color: #1a1308;
+    --primary-blue: #0e2341;
+    --primary-gold: #c9a34e;
+    --accent-gold-bg: rgba(201, 163, 78, 0.1);
+    --card-bg: #fffaf0;
+    --border-color: #d9c99e;
+    --pill-bg: #f3e9d2;
+    --pill-text: #1a1308;
+    --white: #ffffff;
+    --green: #2c5a3a;
+    --red: #8a3a1f;
+    --passage-bg: #f3e9d2;
+    --choice-hover: rgba(201, 163, 78, 0.05);
+    --shadow: rgba(14, 35, 65, 0.08);
+    --accent-cyan: #0e2341;
+    --grid-color: rgba(217, 201, 158, 0.3);
   }
 
-  body.light-mode {
-    --bg-color: #f8fafc;
-    --text-color: #0f172a;
-    --primary-blue: #ffffff;
-    --primary-gold: #b45309;
-    --accent-gold-bg: rgba(180, 83, 9, 0.05);
-    --card-bg: #ffffff;
-    --border-color: rgba(0, 0, 0, 0.1);
-    --pill-bg: #f1f5f9;
-    --pill-text: #0f172a;
-    --white: #ffffff;
-    --green: #15803d;
-    --red: #b91c1c;
-    --passage-bg: #f8fafc;
-    --choice-hover: #f1f5f9;
-    --shadow: rgba(0, 0, 0, 0.05);
+  body.dark-mode {
+    --bg-color: #0e2341;
+    --text-color: #f1f5f9;
+    --primary-blue: #1e293b;
+    --primary-gold: #c9a34e;
+    --accent-gold-bg: rgba(201, 163, 78, 0.15);
+    --card-bg: #1e293b;
+    --border-color: #334155;
+    --pill-bg: #334155;
+    --pill-text: #f1f5f9;
+    --white: #1e293b;
+    --green: #4ade80;
+    --red: #f87171;
+    --passage-bg: rgba(0,0,0,0.2);
+    --choice-hover: rgba(255,255,255,0.05);
+    --shadow: rgba(0,0,0,0.4);
+    --accent-cyan: #ffd700;
+    --grid-color: rgba(255, 255, 255, 0.05);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     background: var(--bg-color); color: var(--text-color);
-    font-family: 'Outfit', sans-serif;
+    font-family: Georgia, 'Times New Roman', serif;
     font-size: 15px; line-height: 1.65;
     transition: background 0.3s, color 0.3s;
+    background-image: 
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 25px 25px;
   }
   @media print {
     .no-print { display: none !important; }
@@ -272,6 +279,21 @@
   }
   .rank-1 { background: var(--primary-gold); color: #000; border-color: #fff; }
   .rank-2 { background: #e2e8f0; color: #000; }
+  .rank-3 { background: #cd7f32; color: #fff; }
+
+  .rank-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .rank-1 { background: #ffd700; color: #000; box-shadow: 0 0 10px rgba(255,215,0,0.5); }
+  .rank-2 { background: #c0c0c0; color: #000; }
   .rank-3 { background: #cd7f32; color: #fff; }
 
   @media (max-width: 700px) {
@@ -2414,6 +2436,44 @@ function renderResultCard(title, stats) {
   );
 }
 
+function showPublicLeaderboard() {
+  const panel = document.getElementById("publicLeaderboard");
+  const all = getAttempts();
+  if (all.length === 0) return;
+
+  const latestByEmail = {};
+  all.forEach((row) => {
+    latestByEmail[normalizeEmail(row.email)] = row;
+  });
+  const latestRows = Object.values(latestByEmail);
+
+  let html = '<div class="results-panel" style="border-left: 5px solid var(--primary-gold);">';
+  html += '<h3>Legalstaan Public Standings</h3>';
+  html += '<p style="font-size:12px; opacity:0.8; margin-bottom:15px;">Individual marks are hidden to maintain a positive and demotivation-free learning environment for all students. Ranks are based on the latest performance metrics.</p>';
+  html += '<table class="master-table"><thead><tr><th>Rank</th><th>Candidate Name</th><th>Date</th><th>Status</th></tr></thead><tbody>';
+  
+  latestRows
+    .sort((a, b) => Number(b.result.score) - Number(a.result.score))
+    .slice(0, 20)
+    .forEach((row, idx) => {
+      const name = row.name || row.email.split('@')[0];
+      const isMe = normalizeEmail(row.email) === normalizeEmail(currentSession.email);
+      const rowStyle = isMe ? 'style="background: var(--accent-gold-bg); font-weight:bold; border-left: 3px solid var(--primary-gold);"' : '';
+      const rank = idx + 1;
+      const rankBadge = rank <= 3 ? '<span class="rank-badge rank-' + rank + '">' + rank + '</span>' : rank;
+      
+      html += '<tr ' + rowStyle + '><td>' + rankBadge + '</td><td>' + name + (isMe ? ' (You)' : '') + '</td><td>' + new Date(row.attemptedAt).toLocaleDateString() + '</td><td><span style="color:var(--green); font-weight:bold;">● COMPLETED</span></td></tr>';
+    });
+  html += '</tbody></table>';
+  if (latestRows.length > 20) {
+    html += '<div style="text-align:center; padding:10px; font-size:11px; opacity:0.6;">+ ' + (latestRows.length - 20) + ' more participants</div>';
+  }
+  html += '</div>';
+
+  panel.innerHTML = html;
+  panel.classList.remove("app-hidden");
+}
+
 function showMyResults() {
   if (!currentSession) return;
   const panel = document.getElementById("myResultPanel");
@@ -2454,7 +2514,7 @@ function showMasterPanel() {
   const all = getAttempts();
 
   if (all.length === 0) {
-    panel.innerHTML = '<h3>Master Analytics</h3><div>No attempts available yet.</div>';
+    panel.innerHTML = '<h3>Confidential Master Analytics</h3><div>No attempts available yet.</div>';
     panel.classList.remove("app-hidden");
     return;
   }
@@ -2468,7 +2528,7 @@ function showMasterPanel() {
   const avgPercent = (latestRows.reduce((s, r) => s + Number(r.result.percent), 0) / latestRows.length).toFixed(2);
   const aggregateStats = aggregateSubjectStats(latestRows);
 
-  let html = '<h3>Master Analytics: Leaderboard (Latest Attempts)</h3>';
+  let html = '<h3><span style="color:var(--red)">[CONFIDENTIAL]</span> Master Analytics & Student Performance</h3>';
   html += '<div class="results-grid">' +
     '<div class="metric"><div class="k">Students Attempted</div><div class="v">' + latestRows.length + '</div></div>' +
     '<div class="metric"><div class="k">Total Attempts</div><div class="v">' + all.length + '</div></div>' +
@@ -2483,7 +2543,7 @@ function showMasterPanel() {
   html += pie.html;
 
   html += '<div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">' +
-          '<h3>Student Leaderboard</h3>' +
+          '<h3>Detailed Student Leaderboard (Visible only to Masters)</h3>' +
           '<input type="text" id="masterSearch" placeholder="Search by name or email..." style="padding:6px 10px; border:1px solid var(--border-color); width:250px;" onkeyup="filterMasterTable()">' +
           '</div>';
 
@@ -2507,48 +2567,6 @@ function showMasterPanel() {
   panel.innerHTML = html;
   panel.classList.remove("app-hidden");
   drawPieChart("masterResultChart", pie.data);
-}
-
-function showStudentLeaderboard() {
-  const panel = document.getElementById("studentLeaderboardPanel");
-  if (!panel) return;
-  
-  const all = getAttempts();
-  if (all.length === 0) {
-    panel.innerHTML = "";
-    return;
-  }
-
-  const latestByEmail = {};
-  all.forEach((row) => {
-    latestByEmail[normalizeEmail(row.email)] = row;
-  });
-  const sorted = Object.values(latestByEmail).sort((a, b) => Number(b.result.score) - Number(a.result.score));
-
-  let html = '<div class="results-panel" style="border-left-color: var(--accent-cyan);">';
-  html += '<h3 style="margin-bottom:12px; color: var(--accent-cyan);">Public Standings (Top Participants)</h3>';
-  html += '<div style="font-size:12px; margin-bottom:12px; opacity:0.8;">Marks are hidden to maintain a healthy competitive environment. Ranks are based on latest performance.</div>';
-  html += '<table class="master-table"><thead><tr><th>Rank</th><th>Name</th><th>Role</th><th>Status</th></tr></thead><tbody>';
-  
-  sorted.slice(0, 10).forEach((row, idx) => {
-    const rank = idx + 1;
-    const name = row.name || row.email.split('@')[0];
-    const rankClass = rank <= 3 ? "rank-" + rank : "";
-    html += '<tr>' +
-      '<td><span class="rank-pill ' + rankClass + '">' + rank + '</span></td>' +
-      '<td><b>' + name + '</b></td>' +
-      '<td>' + row.role.toUpperCase() + '</td>' +
-      '<td><span style="color:var(--green);">● Attempted</span></td>' +
-      '</tr>';
-  });
-  
-  html += '</tbody></table>';
-  if (sorted.length > 10) {
-    html += '<div style="text-align:center; margin-top:10px; font-size:11px; opacity:0.7;">+ ' + (sorted.length - 10) + ' more participants</div>';
-  }
-  html += '</div>';
-
-  panel.innerHTML = html;
 }
 
 function filterMasterTable() {
@@ -2648,13 +2666,14 @@ function mountAppAfterLogin() {
   document.getElementById("appShell").classList.remove("app-hidden");
   document.getElementById("myResultPanel").classList.add("app-hidden");
   document.getElementById("masterPanel").classList.add("app-hidden");
+  document.getElementById("publicLeaderboard").classList.add("app-hidden");
   document.getElementById("queryPanel").classList.remove("app-hidden");
 
   const profile = document.getElementById("profilePill");
   profile.textContent = "Logged in: " + (currentSession.name || currentSession.email) + " | Role: " + currentSession.role.toUpperCase();
 
   showMyResults();
-  showStudentLeaderboard();
+  showPublicLeaderboard();
   if (currentSession.role === "master") showMasterPanel();
   renderQueryList();
 }

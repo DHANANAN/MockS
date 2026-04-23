@@ -2395,8 +2395,8 @@ function convertQuestionsToInteractive() {
     const optsBlocks = Array.from(qEl.querySelectorAll(":scope > .opts"));
     if (optsBlocks.length === 0) return;
 
-    const firstOptionsBlock = optsBlocks[0];
-    const optionLines = Array.from(firstOptionsBlock.querySelectorAll(":scope > .op"));
+    const optionsBlock = optsBlocks[optsBlocks.length - 1];
+    const optionLines = Array.from(optionsBlock.querySelectorAll(":scope > .op"));
     const mcqLike = optionLines.length >= 4 && optionLines.slice(0, 4).every((line) => /\([A-D]\)/.test(line.textContent));
     if (!mcqLike) return;
 

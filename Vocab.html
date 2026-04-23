@@ -172,35 +172,42 @@
   }
   .akey-head h2 { font-size: 28px; font-weight: 800; text-transform: uppercase; }
   
-  .ans-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 32px; }
+  .ans-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 32px; }
   .ans-cell {
     display: flex; justify-content: space-between; background: var(--pill-bg);
-    border: 1px solid var(--border-color); padding: 8px 12px;
-    font-size: 13px; border-radius: 6px;
+    border: 1px solid var(--border-color); padding: 10px 14px;
+    font-size: 14px; border-radius: 8px; transition: all 0.2s;
   }
-  .ans-cell .n { color: var(--text-secondary); font-weight: 600; }
-  .ans-cell .a { font-weight: 800; color: var(--green); background: rgba(34, 197, 94, 0.1); padding: 0 8px; border-radius: 4px; }
+  .ans-cell:hover { border-color: var(--primary-gold); background: var(--accent-gold-bg); }
+  .ans-cell .n { color: var(--text-color); opacity: 0.7; font-weight: 600; }
+  .ans-cell .a { font-weight: 800; color: var(--green); background: rgba(44, 90, 58, 0.1); padding: 2px 10px; border-radius: 4px; }
   
   .sol-sec {
-    background: #000; color: #fff; padding: 14px 24px;
-    margin: 30px 0 16px 0; border-radius: 10px;
-    font-size: 20px; font-weight: 800; border: 1px solid var(--border-color);
+    background: var(--primary-blue); color: var(--primary-gold); padding: 25px;
+    margin: 60px 0 30px 0; border-radius: 12px;
+    font-size: 26px; font-weight: 800; border: 1px solid var(--primary-gold);
+    box-shadow: var(--shadow); text-align: center;
+    text-transform: uppercase; letter-spacing: 3px;
   }
   .sol {
-    background: var(--card-bg); border: 1px solid var(--border-color); border-left: 4px solid var(--green);
-    padding: 16px 20px; margin: 14px 0; border-radius: 0 12px 12px 0;
+    background: var(--card-bg); border: 1px solid var(--border-color); border-left: 6px solid var(--green);
+    padding: 24px; margin: 20px 0; border-radius: 12px;
+    box-shadow: var(--shadow); position: relative;
   }
-  .sol .sn { font-weight: 800; font-size: 16px; color: var(--primary-gold); }
+  .sol::before { content: 'LEGALSTAAN INSIGHT'; font-size: 10px; font-weight: 800; color: var(--green); letter-spacing: 2px; display: block; margin-bottom: 12px; opacity: 0.8; }
+  .sol .sh { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
+  .sol .sn { font-weight: 800; font-size: 18px; color: var(--primary-gold); }
+  .sol .sp { font-size: 14px; font-weight: 600; opacity: 0.8; font-style: italic; color: var(--text-color); }
   .sol .sa {
-    font-weight: 800; font-size: 11px;
-    background: var(--green); color: #fff; padding: 3px 10px; letter-spacing: 1px; border-radius: 4px;
+    font-weight: 800; font-size: 12px;
+    background: var(--green); color: #fff; padding: 4px 14px; letter-spacing: 1px; border-radius: 50px;
     text-transform: uppercase;
   }
   .sol .sb {
-    font-size: 14px; line-height: 1.7; border-top: 1px solid var(--border-color);
-    padding-top: 10px; color: var(--text-color); margin-top: 8px;
+    font-size: 15px; line-height: 1.8; border-top: 1px solid var(--border-color);
+    padding-top: 15px; color: var(--text-color); margin-top: 10px;
   }
-  .sol .sb b { color: var(--accent-cyan); }
+  .sol .sb b { color: var(--primary-gold); }
 
   .auth-wrap {
     max-width: 500px;
@@ -247,8 +254,19 @@
 
   .results-panel, .master-panel, .query-panel {
     background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid var(--border-color);
-    padding: 30px; border-radius: 20px; margin: 24px 0;
+    padding: 35px; border-radius: 24px; margin: 32px 0;
+    box-shadow: 0 15px 40px var(--shadow);
   }
+  .query-input-wrap {
+    display: flex; flex-direction: column; gap: 15px; margin-top: 20px;
+  }
+  .query-input-wrap select, .query-input-wrap textarea {
+    background: rgba(0,0,0,0.05); border: 1px solid var(--border-color);
+    padding: 15px; border-radius: 12px; font-family: Georgia, serif; color: var(--text-color);
+    font-size: 15px;
+  }
+  body.dark-mode .query-input-wrap select, body.dark-mode .query-input-wrap textarea { background: rgba(255,255,255,0.05); }
+  .query-actions { display: flex; gap: 12px; margin-top: 10px; flex-wrap: wrap; }
   .results-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 20px;
   }
@@ -333,6 +351,9 @@
 </div>
 
 <div class="cover">
+  <div style="text-align: center; margin-bottom: 30px;">
+    <img src="legalstaan_banner.png" alt="Legalstaan Banner" style="max-width: 350px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+  </div>
   <div class="brand">* JML MOCK EXAMINATION SERIES * FULL-LENGTH PAPER *</div>
   <h1>IP-Joint Masters / LL.M.<br>Admission Test &mdash; MOCK</h1>
   <div class="sub">Pattern-matched to JML 2024 PYQ &nbsp;&middot;&nbsp; <b class="accent-gold">Difficulty: Above Cut-off</b></div>
@@ -1984,23 +2005,34 @@
 <div id="masterPanel" class="master-panel app-hidden"></div>
 
 <div id="queryPanel" class="query-panel app-hidden">
-  <h3>QD: Query Dashboard & Contact the Masters</h3>
-  <div>Use this section to send your question, feedback, or consultation request along with your result summary.</div>
-  <select id="querySubject">
-    <option value="General">General</option>
-    <option value="English">English</option>
-    <option value="Legal Reasoning">Legal Reasoning</option>
-    <option value="Intellectual Property Law">Intellectual Property Law</option>
-    <option value="Result Review">Result Review</option>
-  </select>
-  <textarea id="queryText" rows="5" placeholder="Type your query here..."></textarea>
-  <div class="report-actions">
-    <button id="addQueryBtn" class="btn alt" type="button">ADD QUERY</button>
-    <button id="emailMastersBtn" class="btn" type="button">EMAIL MASTERS</button>
-    <button id="downloadReportBtn" class="btn warn" type="button">DOWNLOAD REPORT</button>
+  <h3><img src="legalstaan_logo.png" style="height:28px; vertical-align:middle; margin-right:12px;">Query Dashboard & Mentor Contact</h3>
+  <div style="margin-bottom: 20px; opacity: 0.9;">Need expert clarification? Send your query along with your performance report to the Legalstaan masters.</div>
+  
+  <div class="query-input-wrap">
+    <label style="font-size: 12px; font-weight: 800; color: var(--primary-gold); letter-spacing: 1px;">SELECT SUBJECT</label>
+    <select id="querySubject">
+      <option value="General">General Consultation</option>
+      <option value="English">Section A - English</option>
+      <option value="Legal Reasoning">Section B - Legal Reasoning</option>
+      <option value="Intellectual Property Law">Section C - Intellectual Property Law</option>
+      <option value="Result Review">Full Result Review</option>
+    </select>
+    
+    <label style="font-size: 12px; font-weight: 800; color: var(--primary-gold); letter-spacing: 1px;">YOUR QUERY</label>
+    <textarea id="queryText" rows="5" placeholder="Describe your doubt in detail... our mentors will review your attempt history and get back to you via email."></textarea>
   </div>
-  <div class="email-note">The email draft will include your profile, score, subject-wise analysis, and saved queries. If your mail app cannot accept automatic attachments, use the downloaded report file alongside the draft.</div>
-  <div id="queryList" class="query-list"></div>
+
+  <div class="query-actions">
+    <button id="addQueryBtn" class="btn" type="button">SAVE QUERY</button>
+    <button id="emailMastersBtn" class="btn alt" type="button">SEND TO MASTERS (GMAIL)</button>
+    <button id="downloadReportBtn" class="btn warn" type="button">DOWNLOAD REPORT (TXT)</button>
+  </div>
+
+  <div style="margin-top: 25px; padding: 15px; background: var(--accent-gold-bg); border-radius: 12px; font-size: 12px; line-height: 1.6;">
+    <b style="color: var(--primary-gold);">PRO TIP:</b> Clicking <b>'SEND TO MASTERS'</b> will generate a comprehensive report including your score, accuracy, and subject-wise breakdown. Make sure you have saved your queries first.
+  </div>
+
+  <div id="queryList" class="query-list" style="margin-top: 30px;"></div>
 </div>
 
 <div class="copyright-bar">

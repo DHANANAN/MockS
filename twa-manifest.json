@@ -1,0 +1,54 @@
+{
+  "packageId": "app.netlify.legalstaan.twa",
+  "host": "legalstaan.netlify.app",
+  "name": "Legalstaan Mock Portal",
+  "launcherName": "Legalstaan",
+  "display": "standalone",
+  "themeColor": "#0E2341",
+  "themeColorDark": "#000000",
+  "navigationColor": "#000000",
+  "navigationColorDark": "#000000",
+  "navigationDividerColor": "#000000",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#FBF6EC",
+  "enableNotifications": true,
+  "startUrl": "/index.html",
+  "iconUrl": "https://legalstaan.netlify.app/icon-512.png",
+  "maskableIconUrl": "https://legalstaan.netlify.app/icon-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "C:\\Users\\Pc\\Downloads\\MockS-main\\MockS-main\\android.keystore",
+    "alias": "android"
+  },
+  "appVersionName": "2",
+  "appVersionCode": 2,
+  "shortcuts": [
+    {
+      "name": "Take Mock Test",
+      "shortName": "Mock Test",
+      "url": "https://legalstaan.netlify.app/Vocab.html",
+      "chosenIconUrl": "https://legalstaan.netlify.app/icon-192.png"
+    }
+  ],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://legalstaan.netlify.app/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://legalstaan.netlify.app/",
+  "minSdkVersion": 21,
+  "orientation": "portrait-primary",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "protocolHandlers": [],
+  "fileHandlers": [],
+  "launchHandlerClientMode": "",
+  "displayOverride": [],
+  "appVersion": "2"
+}

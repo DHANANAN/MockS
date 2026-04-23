@@ -9,6 +9,28 @@
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
   <style>
+    :root {
+      --bg-color: #fbf6ec;
+      --text-color: #1a1308;
+      --primary-blue: #0e2341;
+      --primary-gold: #c9a34e;
+      --card-bg: #fffaf0;
+      --border-color: #d9c99e;
+      --pill-bg: #f3e9d2;
+      --shadow: rgba(0,0,0,0.05);
+    }
+
+    body.dark-mode {
+      --bg-color: #0f172a;
+      --text-color: #e2e8f0;
+      --primary-blue: #1e293b;
+      --primary-gold: #f59e0b;
+      --card-bg: #1e293b;
+      --border-color: #334155;
+      --pill-bg: #334155;
+      --shadow: rgba(0,0,0,0.3);
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -17,30 +39,33 @@
       align-items: center;
       justify-content: center;
       font-family: Georgia, "Times New Roman", serif;
-      background: #fbf6ec;
-      color: #1a1308;
+      background: var(--bg-color);
+      color: var(--text-color);
       padding: 24px;
       text-align: center;
+      transition: background 0.3s, color 0.3s;
     }
     .container {
-      background: #fffaf0;
-      border: 1px solid #d9c99e;
-      border-top: 6px solid #0e2341;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-top: 6px solid var(--primary-blue);
       padding: 40px;
       max-width: 600px;
       width: 100%;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 12px var(--shadow);
       border-radius: 4px;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
     }
     .container:hover {
       transform: translateY(-5px);
       box-shadow: 0 8px 24px rgba(0,0,0,0.1);
     }
     h1 {
-      color: #0e2341;
+      color: var(--primary-blue);
       margin-bottom: 30px;
     }
+    body.dark-mode h1 { color: var(--primary-gold); }
     .mock-list {
       display: flex;
       flex-direction: column;
@@ -49,19 +74,24 @@
     .mock-card {
       display: block;
       padding: 20px;
-      background: #f3e9d2;
-      border: 1px solid #c9a34e;
-      color: #0e2341;
+      background: var(--pill-bg);
+      border: 1px solid var(--primary-gold);
+      color: var(--primary-blue);
       text-decoration: none;
       font-weight: bold;
       font-size: 18px;
       border-radius: 4px;
-      transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+      transition: all 0.3s ease;
     }
+    body.dark-mode .mock-card { color: var(--text-color); }
     .mock-card:hover {
-      background: #0e2341;
-      color: #fbf6ec;
+      background: var(--primary-blue);
+      color: #fff;
       transform: scale(1.02);
+    }
+    body.dark-mode .mock-card:hover {
+      background: var(--primary-gold);
+      color: #000;
     }
     .mock-subtitle {
       font-size: 14px;
@@ -69,10 +99,25 @@
       margin-top: 8px;
       opacity: 0.9;
     }
+    .mode-toggle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--pill-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      padding: 6px 12px;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      font-weight: bold;
+      border-radius: 4px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
+    <button id="darkModeToggle" class="mode-toggle">🌙 DARK MODE</button>
     <h1>Legalstaan Mock Portal</h1>
     <p>Select a mock test below to begin your examination.</p>
     <div class="mock-list">
@@ -83,6 +128,27 @@
     </div>
   </div>
   <script>
+    const DARK_MODE_KEY = "jmlDarkMode";
+    const btn = document.getElementById("darkModeToggle");
+
+    function updateBtn(isDark) {
+      btn.innerHTML = isDark ? "☀️ LIGHT MODE" : "🌙 DARK MODE";
+    }
+
+    function init() {
+      const isDark = localStorage.getItem(DARK_MODE_KEY) === "true";
+      if (isDark) document.body.classList.add("dark-mode");
+      updateBtn(isDark);
+    }
+
+    btn.addEventListener("click", () => {
+      const isDark = document.body.classList.toggle("dark-mode");
+      localStorage.setItem(DARK_MODE_KEY, isDark ? "true" : "false");
+      updateBtn(isDark);
+    });
+
+    init();
+
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js').then(reg => {

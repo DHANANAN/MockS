@@ -1,0 +1,17 @@
+{
+  "name": "Legalstaan Mock Portal",
+  "short_name": "Legalstaan",
+  "description": "Mock Test Portal for JML / IP-Joint LL.M.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#fbf6ec",
+  "theme_color": "#0e2341",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512 any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

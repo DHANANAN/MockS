@@ -151,6 +151,8 @@
                 <data android:scheme="https"
                     android:host="@string/hostName"
                 
+                    android:pathPrefix="/MockS/"
+                
                 />
             </intent-filter>
 
@@ -180,9 +182,8 @@
             android:exported="@bool/enableNotification">
 
             
-                <meta-data
-                    android:name="android.support.customtabs.trusted.SMALL_ICON"
-                    android:resource="@drawable/ic_notification_icon" />
+            
+            
             
 
             <intent-filter>

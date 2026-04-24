@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Legalstaan — Mock Test Portal</title>
+  <title>Legalstaan — Premium Mock Portal</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0e2341">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -15,25 +15,26 @@
       --text-color: #1a1308;
       --primary-blue: #0e2341;
       --primary-gold: #c9a34e;
-      --card-bg: #fffaf0;
-      --border-color: #d9c99e;
+      --card-bg: rgba(255, 255, 255, 0.8);
+      --border-color: rgba(217, 201, 158, 0.4);
       --pill-bg: #f3e9d2;
-      --hero-overlay: rgba(14, 35, 65, 0.85);
-      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --hero-overlay: rgba(14, 35, 65, 0.8);
+      --shadow: 0 20px 40px rgba(0,0,0,0.05);
       --white: #ffffff;
+      --accent-gold: #d4af37;
     }
 
     body.dark-mode {
-      --bg-color: #0f172a;
-      --text-color: #e2e8f0;
-      --primary-blue: #1e293b;
+      --bg-color: #050a14;
+      --text-color: #f1f5f9;
+      --primary-blue: #0f172a;
       --primary-gold: #f59e0b;
-      --card-bg: #1e293b;
-      --border-color: #334155;
-      --pill-bg: #334155;
-      --hero-overlay: rgba(15, 23, 42, 0.9);
-      --shadow: 0 10px 30px rgba(0,0,0,0.4);
-      --white: #1e293b;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --pill-bg: #1e293b;
+      --hero-overlay: rgba(5, 10, 20, 0.85);
+      --shadow: 0 20px 40px rgba(0,0,0,0.5);
+      --white: #0f172a;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -42,12 +43,21 @@
       font-family: 'Outfit', sans-serif;
       background: var(--bg-color);
       color: var(--text-color);
-      transition: background 0.3s, color 0.3s;
+      transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s;
       overflow-x: hidden;
-      background-image: 
-        linear-gradient(var(--border-color) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
-      background-size: 25px 25px;
+      line-height: 1.6;
+    }
+
+    /* Subtle Pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.3;
+      z-index: -1;
+      pointer-events: none;
     }
 
     /* Navbar */
@@ -55,249 +65,342 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 60px;
-      position: absolute;
+      padding: 20px 8%;
+      position: fixed;
+      top: 0;
       width: 100%;
-      z-index: 100;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      background: transparent;
     }
-    .logo {
+    .nav.scrolled {
+      padding: 12px 8%;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: var(--shadow);
+    }
+    
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .logo-wrap img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .brand {
       font-family: 'Playfair Display', serif;
       font-size: 24px;
       font-weight: 700;
       color: var(--primary-gold);
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
     }
-    .logo span { color: #fff; }
 
     .mode-toggle {
-      background: rgba(255,255,255,0.1);
+      background: var(--card-bg);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: #fff;
-      padding: 8px 16px;
-      cursor: pointer;
-      font-weight: 600;
-      border-radius: 50px;
-      font-size: 13px;
-      transition: all 0.3s ease;
-    }
-    body.dark-mode .mode-toggle {
-      background: var(--pill-bg);
+      border: 1px solid var(--border-color);
       color: var(--text-color);
-      border-color: var(--border-color);
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: 700;
+      border-radius: 50px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .mode-toggle:hover {
+      transform: scale(1.05);
+      background: var(--primary-gold);
+      color: #000;
+      border-color: transparent;
     }
 
     /* Hero */
     .hero {
-      height: 85vh;
-      background: url('legalstaan_hero_mockup_1776983847291.png') center/cover no-repeat;
+      height: 100vh;
+      background: url('legalstaan_premium_hero_1777012579312.png') center/cover no-repeat;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       color: #fff;
+      padding-top: 80px;
     }
     .hero::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
       background: var(--hero-overlay);
+      backdrop-filter: blur(2px);
     }
     .hero-content {
       position: relative;
       z-index: 1;
-      max-width: 800px;
-      padding: 20px;
+      max-width: 900px;
+      padding: 40px;
+      animation: fadeInUp 1s ease-out;
     }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .hero h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 56px;
+      font-size: clamp(40px, 8vw, 72px);
       font-weight: 700;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       line-height: 1.1;
+      letter-spacing: -0.5px;
     }
     .hero p {
-      font-size: 20px;
-      margin-bottom: 40px;
+      font-size: clamp(16px, 4vw, 22px);
+      margin-bottom: 48px;
       opacity: 0.9;
-      letter-spacing: 0.5px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 300;
     }
     .cta-btn {
       background: var(--primary-gold);
       color: #000;
-      padding: 18px 40px;
+      padding: 20px 48px;
       text-decoration: none;
       font-weight: 800;
       font-size: 16px;
-      border-radius: 50px;
+      border-radius: 12px;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
-      box-shadow: 0 10px 20px rgba(201,163,78,0.3);
+      letter-spacing: 2px;
+      box-shadow: 0 10px 30px rgba(201,163,78,0.3);
       transition: all 0.3s ease;
+      display: inline-block;
     }
     .cta-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 30px rgba(201,163,78,0.4);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(201,163,78,0.4);
+      background: #e5bc5c;
     }
 
     /* Stats */
     .stats {
       display: flex;
       justify-content: center;
-      gap: 60px;
-      margin-top: -50px;
+      gap: 30px;
+      margin-top: -60px;
       position: relative;
-      z-index: 2;
+      z-index: 10;
+      padding: 0 8%;
     }
     .stat-card {
       background: var(--card-bg);
+      backdrop-filter: blur(30px);
       border: 1px solid var(--border-color);
-      padding: 30px 50px;
-      border-radius: 12px;
+      padding: 30px 40px;
+      border-radius: 20px;
       box-shadow: var(--shadow);
       text-align: center;
+      flex: 1;
+      max-width: 280px;
+      transition: transform 0.3s ease;
     }
-    .stat-card h3 { font-size: 32px; color: var(--primary-gold); }
-    .stat-card p { font-size: 14px; opacity: 0.7; margin-top: 5px; }
+    .stat-card:hover { transform: translateY(-5px); }
+    .stat-card h3 { font-size: 36px; color: var(--primary-gold); margin-bottom: 5px; font-weight: 800; }
+    .stat-card p { font-size: 14px; font-weight: 600; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; }
 
     /* Mocks Section */
     .section {
-      padding: 100px 60px;
-      max-width: 1200px;
+      padding: 120px 8%;
+      max-width: 1400px;
       margin: 0 auto;
     }
     .section-header {
       text-align: center;
-      margin-bottom: 60px;
+      margin-bottom: 80px;
     }
     .section-header h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 40px;
+      font-size: 48px;
       color: var(--primary-blue);
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
     body.dark-mode .section-header h2 { color: var(--primary-gold); }
     .section-header p {
-      max-width: 600px;
+      max-width: 650px;
       margin: 0 auto;
-      opacity: 0.8;
+      font-size: 18px;
+      opacity: 0.7;
     }
 
     .mock-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 40px;
     }
     .mock-card {
-      background: var(--white);
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
       border: 1px solid var(--border-color);
-      padding: 40px;
-      border-radius: 16px;
+      padding: 50px;
+      border-radius: 24px;
       text-decoration: none;
       color: inherit;
-      transition: all 0.4s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .mock-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; width: 6px; height: 100%;
-      background: var(--primary-gold);
+      top: 0; left: 0; width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--primary-gold), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
     }
     .mock-card:hover {
-      transform: translateY(-10px);
+      transform: translateY(-10px) scale(1.02);
       box-shadow: var(--shadow);
       border-color: var(--primary-gold);
     }
+    .mock-card:hover::before { opacity: 1; }
+
     .mock-card h3 {
-      font-size: 24px;
-      margin-bottom: 12px;
+      font-size: 28px;
+      margin-bottom: 16px;
       color: var(--primary-blue);
+      font-family: 'Playfair Display', serif;
     }
     body.dark-mode .mock-card h3 { color: var(--primary-gold); }
+    
     .mock-card p {
-      font-size: 15px;
-      line-height: 1.6;
-      opacity: 0.8;
-      margin-bottom: 20px;
+      font-size: 16px;
+      line-height: 1.7;
+      opacity: 0.7;
+      margin-bottom: 32px;
+    }
+    .mock-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     .mock-tag {
-      display: inline-block;
       background: var(--pill-bg);
-      padding: 6px 14px;
+      padding: 8px 18px;
       border-radius: 50px;
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       color: var(--primary-blue);
     }
     body.dark-mode .mock-tag { color: var(--text-color); }
+    
+    .arrow-icon {
+      font-size: 20px;
+      color: var(--primary-gold);
+      transition: transform 0.3s;
+    }
+    .mock-card:hover .arrow-icon { transform: translateX(8px); }
 
     /* Mentors */
     .mentors {
       background: var(--primary-blue);
       color: #fff;
-      padding: 100px 60px;
+      padding: 120px 8%;
+      position: relative;
+      overflow: hidden;
+    }
+    .mentors::after {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(201, 163, 78, 0.1) 0%, transparent 70%);
+      z-index: 0;
     }
     .mentor-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 30px;
-      margin-top: 50px;
+      margin-top: 60px;
+      position: relative;
+      z-index: 1;
     }
     .mentor-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 30px;
-      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 40px;
+      border-radius: 20px;
       text-align: center;
+      transition: all 0.3s;
+    }
+    .mentor-card:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: var(--primary-gold);
+      transform: translateY(-5px);
     }
     .mentor-card .name {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 700;
       color: var(--primary-gold);
-      margin-bottom: 5px;
+      margin-bottom: 12px;
+      font-family: 'Playfair Display', serif;
     }
     .mentor-card .title {
-      font-size: 13px;
-      opacity: 0.8;
-      line-height: 1.4;
+      font-size: 14px;
+      opacity: 0.7;
+      line-height: 1.6;
+      font-weight: 300;
     }
 
     footer {
-      padding: 60px;
+      padding: 80px 8%;
       text-align: center;
       border-top: 1px solid var(--border-color);
       font-size: 14px;
-      opacity: 0.7;
+      opacity: 0.6;
+      background: var(--bg-color);
     }
 
     @media (max-width: 768px) {
-      .nav { padding: 20px; }
-      .hero h1 { font-size: 36px; }
-      .stats { flex-direction: column; gap: 20px; padding: 0 20px; }
-      .section { padding: 60px 20px; }
+      .nav { padding: 15px 5%; }
+      .hero { height: auto; padding: 120px 5% 80px; }
+      .hero h1 { font-size: 42px; }
+      .stats { flex-direction: column; align-items: center; margin-top: -40px; padding: 0 5%; }
+      .stat-card { max-width: 100%; width: 100%; }
+      .section { padding: 80px 5%; }
+      .mock-grid { grid-template-columns: 1fr; }
+      .mock-card { padding: 30px; }
     }
   </style>
 </head>
 <body>
-  <nav class="nav">
-    <div class="logo-wrap">
-      <img src="https://i.ibb.co/yFy8BScC/QOi-LQd-Aw.jpg" alt="Legalstaan Logo" id="navLogo">
+  <nav class="nav" id="mainNav">
+    <a href="#" class="logo-wrap">
+      <img src="legalstaan_minimalist_logo_1777012600581.png" alt="Legalstaan Logo">
       <span class="brand">Legalstaan</span>
-    </div>
+    </a>
     <button id="darkModeToggle" class="mode-toggle">🌙 DARK MODE</button>
   </nav>
 
   <section class="hero">
     <div class="hero-content">
-      <div class="hero-brand-box">
-        <img src="https://i.ibb.co/fz0BRgQG/GQ4-Ul-NMW.jpg" alt="Legalstaan Banner" class="hero-banner">
-      </div>
-      <h1>Building Lawyers Beyond Classrooms</h1>
+      <h1>Building Lawyers <br>Beyond Classrooms</h1>
       <p>Master the AIET, CLAT, & MH Law CET with the most authentic mock examination series curated by NLU Alumni.</p>
-      <a href="#mocks" class="cta-btn">Start Mock Test</a>
+      <a href="#mocks" class="cta-btn">Begin Your Journey</a>
     </div>
   </section>
 
@@ -308,31 +411,41 @@
     </div>
     <div class="stat-card">
       <h3>NLU</h3>
-      <p>Alumni Mentorship</p>
+      <p>Alumni Mentors</p>
     </div>
     <div class="stat-card">
       <h3>24/7</h3>
-      <p>Query Support</p>
+      <p>Expert Support</p>
     </div>
   </section>
 
   <section class="section" id="mocks">
     <div class="section-header">
       <h2>Premium Mock Series</h2>
-      <p>Designed to match the latest 2024-25 examination patterns with detailed analytical reporting.</p>
+      <p>Designed to match the latest 2024-25 examination patterns with detailed analytical reporting and NLU-standard rigor.</p>
     </div>
 
     <div class="mock-grid">
-      <a href="Vocab.html" class="mock-card">
-        <h3>Joint Master’s LL.M. – IPR</h3>
-        <p>100 MCQs pattern-matched to JML 2024 PYQ. Covers English, Legal Reasoning, and IPR Law with extreme precision.</p>
-        <span class="mock-tag">AIET NLU DELHI</span>
+      <a href="vocab.html" class="mock-card">
+        <div>
+          <h3>Joint Master’s LL.M. – IPR</h3>
+          <p>100 MCQs pattern-matched to JML 2024 PYQ. Covers English, Legal Reasoning, and IPR Law with extreme precision.</p>
+        </div>
+        <div class="mock-footer">
+          <span class="mock-tag">AIET NLU DELHI</span>
+          <span class="arrow-icon">→</span>
+        </div>
       </a>
       
-      <div class="mock-card" style="opacity: 0.6; cursor: not-allowed;">
-        <h3>MH LAW CET 2026</h3>
-        <p>Coming Soon. A dedicated preparation batch for 5-Year and 3-Year LL.B. aspirants.</p>
-        <span class="mock-tag">UPCOMING</span>
+      <div class="mock-card" style="opacity: 0.5; cursor: not-allowed; filter: grayscale(1);">
+        <div>
+          <h3>MH LAW CET 2026</h3>
+          <p>Coming Soon. A dedicated preparation batch for 5-Year and 3-Year LL.B. aspirants with comprehensive module access.</p>
+        </div>
+        <div class="mock-footer">
+          <span class="mock-tag">UPCOMING</span>
+          <span class="arrow-icon">🔒</span>
+        </div>
       </div>
     </div>
   </section>
@@ -340,7 +453,7 @@
   <section class="mentors">
     <div class="section-header" style="color: #fff;">
       <h2 style="color: var(--primary-gold);">Meet Your Mentors</h2>
-      <p>Learn from those who have already conquered the most prestigious law entrance exams.</p>
+      <p>Learn from those who have already conquered the most prestigious law entrance exams and paved the way for future lawyers.</p>
     </div>
     <div class="mentor-grid">
       <div class="mentor-card">
@@ -363,12 +476,13 @@
   </section>
 
   <footer>
-    <p>Copyright &copy; 2026 Legalstaan Ltd. All Rights Reserved.<br>Building Lawyers Beyond Classrooms.</p>
+    <p>&copy; 2026 Legalstaan Ltd. All Rights Reserved.<br>Building Lawyers Beyond Classrooms.</p>
   </footer>
 
   <script>
     const DARK_MODE_KEY = "jmlDarkMode";
     const btn = document.getElementById("darkModeToggle");
+    const nav = document.getElementById("mainNav");
 
     function updateBtn(isDark) {
       btn.innerHTML = isDark ? "☀️ LIGHT MODE" : "🌙 DARK MODE";
@@ -386,6 +500,14 @@
       updateBtn(isDark);
     });
 
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
     init();
 
     if ('serviceWorker' in navigator) {
@@ -396,5 +518,7 @@
       });
     }
   </script>
+</body>
+</html>
 </body>
 </html>

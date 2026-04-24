@@ -1,6 +1,6 @@
 {
   "packageId": "app.netlify.legalstaan.twa",
-  "host": "legalstaan.netlify.app",
+  "host": "dhananan.github.io",
   "name": "Legalstaan Mock Portal",
   "launcherName": "Legalstaan",
   "display": "standalone",
@@ -12,9 +12,9 @@
   "navigationDividerColorDark": "#000000",
   "backgroundColor": "#FBF6EC",
   "enableNotifications": true,
-  "startUrl": "/index.html",
-  "iconUrl": "https://legalstaan.netlify.app/icon-512.png",
-  "maskableIconUrl": "https://legalstaan.netlify.app/icon-512.png",
+  "startUrl": "/MockS/index.html",
+  "iconUrl": "https://dhananan.github.io/MockS/icon-512.png",
+  "maskableIconUrl": "https://dhananan.github.io/MockS/icon-512.png",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "C:\\Users\\Pc\\Downloads\\MockS-main\\MockS-main\\android.keystore",
@@ -26,12 +26,12 @@
     {
       "name": "Take Mock Test",
       "shortName": "Mock Test",
-      "url": "https://legalstaan.netlify.app/Vocab.html",
-      "chosenIconUrl": "https://legalstaan.netlify.app/icon-192.png"
+      "url": "https://dhananan.github.io/MockS/vocab.html",
+      "chosenIconUrl": "https://dhananan.github.io/MockS/icon-192.png"
     }
   ],
   "generatorApp": "bubblewrap-cli",
-  "webManifestUrl": "https://legalstaan.netlify.app/manifest.json",
+  "webManifestUrl": "https://dhananan.github.io/MockS/manifest.json",
   "fallbackType": "customtabs",
   "features": {},
   "alphaDependencies": {
@@ -40,7 +40,7 @@
   "enableSiteSettingsShortcut": true,
   "isChromeOSOnly": false,
   "isMetaQuest": false,
-  "fullScopeUrl": "https://legalstaan.netlify.app/",
+  "fullScopeUrl": "https://dhananan.github.io/MockS/",
   "minSdkVersion": 21,
   "orientation": "portrait-primary",
   "fingerprints": [],

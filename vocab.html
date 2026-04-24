@@ -16,8 +16,8 @@
     --primary-blue: #0e2341;
     --primary-gold: #c9a34e;
     --accent-gold-bg: rgba(201, 163, 78, 0.1);
-    --card-bg: #fffaf0;
-    --border-color: #d9c99e;
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --border-color: rgba(217, 201, 158, 0.4);
     --pill-bg: #f3e9d2;
     --pill-text: #1a1308;
     --white: #ffffff;
@@ -25,353 +25,393 @@
     --red: #8a3a1f;
     --passage-bg: #f3e9d2;
     --choice-hover: rgba(201, 163, 78, 0.05);
-    --shadow: rgba(14, 35, 65, 0.08);
+    --shadow: 0 10px 30px rgba(14, 35, 65, 0.05);
     --accent-cyan: #0e2341;
-    --grid-color: rgba(217, 201, 158, 0.3);
   }
 
   body.dark-mode {
-    --bg-color: #0e2341;
+    --bg-color: #050a14;
     --text-color: #f1f5f9;
-    --primary-blue: #1e293b;
-    --primary-gold: #c9a34e;
+    --primary-blue: #0f172a;
+    --primary-gold: #f59e0b;
     --accent-gold-bg: rgba(201, 163, 78, 0.15);
-    --card-bg: #1e293b;
-    --border-color: #334155;
-    --pill-bg: #334155;
+    --card-bg: rgba(30, 41, 59, 0.8);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --pill-bg: #1e293b;
     --pill-text: #f1f5f9;
     --white: #1e293b;
     --green: #4ade80;
     --red: #f87171;
     --passage-bg: rgba(0,0,0,0.2);
     --choice-hover: rgba(255,255,255,0.05);
-    --shadow: rgba(0,0,0,0.4);
+    --shadow: 0 15px 40px rgba(0,0,0,0.4);
     --accent-cyan: #ffd700;
-    --grid-color: rgba(255, 255, 255, 0.05);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  
   body {
-    background: var(--bg-color); color: var(--text-color);
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 15px; line-height: 1.65;
-    transition: background 0.3s, color 0.3s;
-    background-image: 
-      linear-gradient(var(--grid-color) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-    background-size: 25px 25px;
+    background: var(--bg-color); 
+    color: var(--text-color);
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px; 
+    line-height: 1.6;
+    transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s;
+    overflow-x: hidden;
   }
+
+  /* Subtle Pattern */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.2;
+    z-index: -1;
+    pointer-events: none;
+  }
+
   @media print {
     .no-print { display: none !important; }
     body { font-size: 12.5px; background: #fff; }
     .page-break { page-break-before: always; }
     .q, .sol, .ans-grid { page-break-inside: avoid; }
   }
+
+  /* Cover Section */
   .cover {
-    background: #000; color: #fdf6e3;
-    padding: 60px 50px; border-bottom: 4px solid var(--primary-gold);
-    position: relative; overflow: hidden;
+    background: #000; 
+    color: #fdf6e3;
+    padding: 80px 50px; 
+    border-bottom: 4px solid var(--primary-gold);
+    position: relative; 
+    overflow: hidden;
+    text-align: center;
   }
-  .cover::after {
-    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle at 90% 10%, rgba(0, 210, 255, 0.1), transparent 50%);
+  .cover::before {
+    content: ''; 
+    position: absolute; 
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: url('legalstaan_premium_hero_1777012579312.png') center/cover no-repeat;
+    opacity: 0.4;
+    filter: blur(5px);
+  }
+  .cover-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
   }
   .cover .brand {
     font-weight: 800; font-size: 12px;
-    letter-spacing: 4px; color: var(--primary-gold); margin-bottom: 14px;
+    letter-spacing: 4px; color: var(--primary-gold); margin-bottom: 20px;
     text-transform: uppercase;
   }
-  .cover h1 { font-size: 42px; font-weight: 800; line-height: 1.1; margin-bottom: 8px; text-transform: uppercase; }
-  .cover .sub {
-    font-style: italic; font-size: 16px; color: var(--accent-cyan);
-    margin-bottom: 26px; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.1);
+  .cover h1 { 
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 56px); 
+    font-weight: 800; 
+    line-height: 1.1; 
+    margin-bottom: 15px; 
+    text-transform: uppercase; 
   }
-  .meta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+  .cover .sub {
+    font-style: italic; font-size: 18px; color: var(--accent-cyan);
+    margin-bottom: 40px; opacity: 0.9;
+  }
+  
+  .meta-row { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 40px; }
   .meta-pill {
-    flex: 1 1 160px; border: 1px solid var(--border-color);
-    padding: 12px 18px; background: var(--pill-bg);
-    border-radius: 8px;
+    flex: 0 1 180px; 
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 20px; 
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    text-align: center;
   }
   .meta-pill label {
-    display: block; font-size: 10px; font-weight: 800; letter-spacing: 2px; color: var(--primary-gold); margin-bottom: 3px;
+    display: block; font-size: 10px; font-weight: 800; letter-spacing: 2px; color: var(--primary-gold); margin-bottom: 8px;
     text-transform: uppercase;
   }
-  .meta-pill span { font-size: 24px; font-weight: 800; color: #fff; }
+  .meta-pill span { font-size: 28px; font-weight: 800; color: #fff; }
+
   .structure-box {
-    background: rgba(255,255,255,0.03); border-left: 4px solid var(--accent-cyan);
-    padding: 16px 20px; font-size: 14px; line-height: 1.7; margin-bottom: 20px;
-    border-radius: 0 8px 8px 0;
+    background: rgba(255,255,255,0.05); 
+    backdrop-filter: blur(10px);
+    border-left: 4px solid var(--accent-cyan);
+    padding: 24px; 
+    font-size: 14px; 
+    line-height: 1.7; 
+    margin-bottom: 30px;
+    border-radius: 0 16px 16px 0;
+    text-align: left;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
   }
   .structure-box b { color: var(--accent-cyan); }
-  .instructions { font-size: 13px; line-height: 1.7; color: #cbd5e1; }
+  
+  .instructions { 
+    font-size: 13px; 
+    line-height: 1.7; 
+    color: #cbd5e1; 
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
   .instructions b { color: var(--primary-gold); }
-  .accent-gold { color: var(--primary-gold); }
+
   .print-bar {
-    background: #000; color: #fff; padding: 14px 40px;
-    display: flex; align-items: center; gap: 14px; font-size: 13px;
+    background: var(--card-bg); 
+    backdrop-filter: blur(20px);
+    color: var(--text-color); 
+    padding: 15px 40px;
+    display: flex; 
+    align-items: center; 
+    gap: 20px; 
+    font-size: 13px;
     border-bottom: 1px solid var(--border-color);
   }
   .btn-print {
-    margin-left: auto; background: var(--primary-gold); color: #000; border: none;
-    padding: 10px 24px; font-weight: 800; font-size: 12px; letter-spacing: 1px; cursor: pointer;
+    margin-left: auto; 
+    background: var(--primary-gold); 
+    color: #000; 
+    border: none;
+    padding: 10px 24px; 
+    font-weight: 800; 
+    font-size: 12px; 
+    letter-spacing: 1px; 
+    cursor: pointer;
     border-radius: 50px;
+    transition: all 0.3s;
   }
-  .main { padding: 40px 50px; max-width: 1000px; margin: 0 auto; }
+  .btn-print:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(201,163,78,0.3); }
+
+  .main { padding: 60px 8%; max-width: 1100px; margin: 0 auto; }
+  
   .sec-head {
-    background: #000; color: #fff; padding: 18px 24px;
-    margin: 40px 0 20px 0; border-radius: 12px;
-    display: flex; justify-content: space-between; align-items: center;
+    background: var(--primary-blue); 
+    color: #fff; 
+    padding: 24px 32px;
+    margin: 60px 0 30px 0; 
+    border-radius: 20px;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
   }
   .sec-head .lbl {
-    background: var(--primary-gold); color: #000; padding: 4px 12px;
-    font-weight: 800; font-size: 11px; letter-spacing: 2px; margin-right: 14px;
-    border-radius: 4px;
+    background: var(--primary-gold); 
+    color: #000; 
+    padding: 6px 16px;
+    font-weight: 800; 
+    font-size: 11px; 
+    letter-spacing: 2px; 
+    margin-right: 20px;
+    border-radius: 50px;
   }
-  .sec-head .tt { font-size: 22px; font-weight: 700; flex: 1; }
-  .sec-head .info { font-size: 12px; color: var(--accent-cyan); font-weight: 600; }
+  .sec-head .tt { font-size: 24px; font-weight: 700; flex: 1; font-family: 'Playfair Display', serif; }
+  .sec-head .info { font-size: 13px; color: var(--primary-gold); font-weight: 600; }
+
   .sub-head {
-    font-weight: 800; font-size: 18px; color: var(--primary-gold);
-    margin: 24px 0 12px 0; padding-bottom: 8px; border-bottom: 2px solid var(--border-color);
-    text-transform: uppercase; letter-spacing: 1px;
+    font-weight: 800; 
+    font-size: 18px; 
+    color: var(--primary-gold);
+    margin: 40px 0 20px 0; 
+    padding-bottom: 12px; 
+    border-bottom: 2px solid var(--border-color);
+    text-transform: uppercase; 
+    letter-spacing: 1px;
   }
   .dir {
-    background: var(--pill-bg); border-left: 4px solid var(--accent-cyan);
-    padding: 12px 18px; font-style: italic; font-size: 14px; margin: 12px 0 20px 0;
-    color: var(--pill-text); border-radius: 0 8px 8px 0;
+    background: var(--pill-bg); 
+    border-left: 4px solid var(--accent-cyan);
+    padding: 16px 24px; 
+    font-style: italic; 
+    font-size: 15px; 
+    margin: 20px 0 30px 0;
+    color: var(--pill-text); 
+    border-radius: 0 12px 12px 0;
   }
   .passage {
-    background: var(--passage-bg); border: 1px solid var(--border-color);
-    padding: 24px; margin: 12px 0 24px 0;
-    font-size: 15px; line-height: 1.8; text-align: justify;
-    border-radius: 12px;
-  }
-  .passage p { margin-bottom: 12px; }
-  .passage p:last-child { margin-bottom: 0; }
-  .q { margin: 20px 0 24px 0; padding: 20px; border-radius: 12px; background: rgba(255,255,255,0.02); border: 1px solid transparent; }
-  .q .qn { font-weight: 800; color: var(--primary-gold); font-size: 18px; margin-right: 6px; }
-  .q .qt { font-size: 15.5px; font-weight: 400; }
-  .q .pr {
-    background: rgba(0, 210, 255, 0.05); border-left: 4px solid var(--accent-cyan);
-    padding: 10px 16px; margin: 12px 0; font-size: 14px; border-radius: 0 8px 8px 0;
-  }
-  .q .pr b { color: var(--accent-cyan); }
-  .q .fa {
-    background: var(--accent-gold-bg); border-left: 4px solid var(--primary-gold);
-    padding: 10px 16px; margin: 10px 0; font-size: 14px; border-radius: 0 8px 8px 0;
-  }
-  .q .fa b { color: var(--primary-gold); }
-  .q .opts { margin: 12px 0 0 10px; font-size: 14.5px; }
-  .q .opts .op { display: block; padding: 8px 0; }
-  .q .subq { margin-top: 8px; font-size: 14.5px; font-weight: 700; color: var(--accent-cyan); }
-  .u { text-decoration: underline; }
-  
-  .akey-head {
-    background: var(--green); color: #fff; padding: 24px;
-    text-align: center; margin: 40px 0 24px 0; border-radius: 12px;
-  }
-  .akey-head h2 { font-size: 28px; font-weight: 800; text-transform: uppercase; }
-  
-  .ans-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 32px; }
-  .ans-cell {
-    display: flex; justify-content: space-between; background: var(--pill-bg);
-    border: 1px solid var(--border-color); padding: 10px 14px;
-    font-size: 14px; border-radius: 8px; transition: all 0.2s;
-  }
-  .ans-cell:hover { border-color: var(--primary-gold); background: var(--accent-gold-bg); }
-  .ans-cell .n { color: var(--text-color); opacity: 0.7; font-weight: 600; }
-  .ans-cell .a { font-weight: 800; color: var(--green); background: rgba(44, 90, 58, 0.1); padding: 2px 10px; border-radius: 4px; }
-  
-  .sol-sec {
-    background: var(--primary-blue); color: var(--primary-gold); padding: 25px;
-    margin: 60px 0 30px 0; border-radius: 12px;
-    font-size: 26px; font-weight: 800; border: 1px solid var(--primary-gold);
-    box-shadow: var(--shadow); text-align: center;
-    text-transform: uppercase; letter-spacing: 3px;
-  }
-  .sol {
-    background: var(--card-bg); border: 1px solid var(--border-color); border-left: 6px solid var(--green);
-    padding: 24px; margin: 20px 0; border-radius: 12px;
-    box-shadow: var(--shadow); position: relative;
-  }
-  .sol::before { content: 'LEGALSTAAN INSIGHT'; font-size: 10px; font-weight: 800; color: var(--green); letter-spacing: 2px; display: block; margin-bottom: 12px; opacity: 0.8; }
-  .sol .sh { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
-  .sol .sn { font-weight: 800; font-size: 18px; color: var(--primary-gold); }
-  .sol .sp { font-size: 14px; font-weight: 600; opacity: 0.8; font-style: italic; color: var(--text-color); }
-  .sol .sa {
-    font-weight: 800; font-size: 12px;
-    background: var(--green); color: #fff; padding: 4px 14px; letter-spacing: 1px; border-radius: 50px;
-    text-transform: uppercase;
-  }
-  .sol .sb {
-    font-size: 15px; line-height: 1.8; border-top: 1px solid var(--border-color);
-    padding-top: 15px; color: var(--text-color); margin-top: 10px;
-  }
-  .sol .sb b { color: var(--primary-gold); }
-  .app-hidden { display: none !important; }
-
-  .auth-wrap {
-    max-width: 500px;
-    margin: 80px auto;
-    background: var(--card-bg);
-    backdrop-filter: blur(20px);
+    background: var(--card-bg); 
+    backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
-    padding: 40px;
+    padding: 40px; 
+    margin: 20px 0 40px 0;
+    font-size: 16px; 
+    line-height: 1.8; 
+    text-align: justify;
     border-radius: 24px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    box-shadow: var(--shadow);
   }
-  .auth-wrap h2 { color: var(--primary-gold); margin-bottom: 20px; font-size: 28px; font-weight: 800; text-transform: uppercase; text-align: center; }
-  .auth-row { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+  .passage p { margin-bottom: 15px; }
+
+  .q { 
+    margin: 30px 0; 
+    padding: 40px; 
+    border-radius: 24px; 
+    background: var(--card-bg); 
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s;
+    box-shadow: var(--shadow);
+  }
+  .q:hover { border-color: var(--primary-gold); }
+  .q .qn { font-weight: 800; color: var(--primary-gold); font-size: 20px; margin-right: 10px; }
+  .q .qt { font-size: 17px; font-weight: 400; color: var(--text-color); }
+  
+  .q .opts { margin: 24px 0 0 10px; display: flex; flex-direction: column; gap: 12px; }
+  .q .opts .op { 
+    display: block; 
+    padding: 15px 20px; 
+    border-radius: 12px;
+    background: rgba(0,0,0,0.02);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  body.dark-mode .q .opts .op { background: rgba(255,255,255,0.03); }
+  .q .opts .op:hover { background: var(--choice-hover); border-color: var(--primary-gold); }
+
+  /* Auth Gate */
+  .auth-wrap {
+    max-width: 450px;
+    margin: 10vh auto;
+    background: var(--card-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--border-color);
+    padding: 50px;
+    border-radius: 32px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+    text-align: center;
+  }
+  .auth-wrap img { width: 80px; height: 80px; border-radius: 16px; margin-bottom: 24px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+  .auth-wrap h2 { 
+    color: var(--primary-gold); 
+    margin-bottom: 12px; 
+    font-size: 32px; 
+    font-weight: 800; 
+    font-family: 'Playfair Display', serif;
+  }
+  .auth-desc { font-size: 14px; opacity: 0.6; margin-bottom: 30px; }
+  
+  .auth-row { display: flex; flex-direction: column; gap: 20px; }
   .auth-row input {
-    width: 100%; padding: 14px 18px; border: 1px solid var(--border-color);
-    background: rgba(0,0,0,0.2); color: #fff; font-size: 15px; border-radius: 12px;
-    font-family: 'Outfit', sans-serif;
+    width: 100%; 
+    padding: 16px 20px; 
+    border: 1px solid var(--border-color);
+    background: rgba(255,255,255,0.05); 
+    color: var(--text-color); 
+    font-size: 16px; 
+    border-radius: 12px;
+    transition: all 0.3s;
   }
+  .auth-row input:focus { border-color: var(--primary-gold); outline: none; background: rgba(255,255,255,0.1); }
+  
   .btn {
-    background: var(--primary-gold); color: #000; border: none; padding: 14px 24px;
-    font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 12px;
+    background: var(--primary-gold); 
+    color: #000; 
+    border: none; 
+    padding: 16px 32px;
+    font-size: 14px; 
+    font-weight: 800; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    border-radius: 12px;
+    width: 100%;
   }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3); opacity: 0.95; }
-  .btn.alt { background: var(--accent-cyan); color: #000; }
+  .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(201,163,78,0.3); }
+  .btn.alt { background: var(--primary-blue); color: #fff; border: 1px solid var(--border-color); }
   .btn.warn { background: var(--red); color: #fff; }
   
+  /* Top Utility */
   .top-utility {
-    max-width: 1000px; margin: 20px auto; padding: 0 20px; display: flex; gap: 15px;
-    align-items: center; justify-content: space-between; flex-wrap: wrap;
+    max-width: 1100px; 
+    margin: 20px auto; 
+    padding: 0 20px; 
+    display: flex; 
+    gap: 15px;
+    align-items: center; 
+    justify-content: space-between; 
+    flex-wrap: wrap;
+    position: sticky;
+    top: 20px;
+    z-index: 100;
   }
   .profile-pill {
-    background: var(--pill-bg); border: 1px solid var(--border-color); color: #fff;
-    padding: 10px 20px; font-size: 13px; border-radius: 50px; font-weight: 600;
+    background: var(--card-bg); 
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color); 
+    color: var(--text-color);
+    padding: 12px 24px; 
+    font-size: 13px; 
+    border-radius: 50px; 
+    font-weight: 700;
+    box-shadow: var(--shadow);
   }
 
-  .choice {
-    display: flex; gap: 12px; align-items: center; background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border-color); padding: 12px 18px;
-    transition: all 0.2s; cursor: pointer; border-radius: 10px; margin-bottom: 8px;
-  }
-  .choice:hover { background: var(--choice-hover); border-color: var(--primary-gold); }
-  .q.answered { border-color: var(--accent-cyan); background: rgba(0, 210, 255, 0.03); }
-
-  .results-panel, .master-panel, .query-panel {
-    background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid var(--border-color);
-    padding: 35px; border-radius: 24px; margin: 32px 0;
-    box-shadow: 0 15px 40px var(--shadow);
-  }
-  .query-input-wrap {
-    display: flex; flex-direction: column; gap: 15px; margin-top: 20px;
-  }
-  .query-input-wrap select, .query-input-wrap textarea {
-    background: rgba(0,0,0,0.05); border: 1px solid var(--border-color);
-    padding: 15px; border-radius: 12px; font-family: Georgia, serif; color: var(--text-color);
-    font-size: 15px;
-  }
-  body.dark-mode .query-input-wrap select, body.dark-mode .query-input-wrap textarea { background: rgba(255,255,255,0.05); }
-  .query-actions { display: flex; gap: 12px; margin-top: 10px; flex-wrap: wrap; }
-  .results-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 20px;
-  }
-  .metric { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 16px; border-radius: 12px; }
-  .metric .k { font-size: 11px; font-weight: 800; color: var(--primary-gold); text-transform: uppercase; letter-spacing: 1px; }
-  .metric .v { margin-top: 4px; font-size: 26px; color: #fff; font-weight: 800; }
-
-  table.master-table {
-    width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-top: 16px; font-size: 14px;
-  }
-  .master-table th { padding: 12px; text-align: left; color: var(--primary-gold); font-weight: 800; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
-  .master-table td { padding: 14px 12px; background: rgba(255,255,255,0.03); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
-  .master-table td:first-child { border-left: 1px solid var(--border-color); border-radius: 10px 0 0 10px; }
-  .master-table td:last-child { border-right: 1px solid var(--border-color); border-radius: 0 10px 10px 0; }
-
-  .mode-toggle {
-    background: var(--pill-bg); border: 1px solid var(--border-color); color: #fff;
-    padding: 10px 20px; cursor: pointer; font-size: 12px; font-weight: 800; border-radius: 50px;
-    transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px;
-  }
-  .mode-toggle:hover { background: var(--primary-gold); color: #000; }
-
-  /* Leaderboard Styling */
-  .rank-pill {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 28px; height: 28px; border-radius: 50%; background: var(--pill-bg);
-    font-weight: 800; font-size: 12px; border: 1px solid var(--border-color);
-  }
-  .rank-1 { background: var(--primary-gold); color: #000; border-color: #fff; }
-  .rank-2 { background: #e2e8f0; color: #000; }
-  .rank-3 { background: #cd7f32; color: #fff; }
-
-  .rank-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    font-size: 12px;
-    font-weight: 800;
-    color: #fff;
-  }
-  .rank-1 { background: #ffd700; color: #000; box-shadow: 0 0 10px rgba(255,215,0,0.5); }
-  .rank-2 { background: #c0c0c0; color: #000; }
-  .rank-3 { background: #cd7f32; color: #fff; }
+  .app-hidden { display: none !important; }
 
   @media (max-width: 700px) {
-    .main { padding: 20px; }
-    .cover { padding: 40px 20px; }
-    .results-grid { grid-template-columns: 1fr 1fr; }
-    .ans-grid { grid-template-columns: repeat(3, 1fr); }
+    .main { padding: 20px 5%; }
+    .cover { padding: 60px 20px; }
+    .top-utility { top: 10px; }
+    .auth-wrap { margin: 5vh 20px; padding: 30px; }
   }
 </style>
 </head>
 <body>
 <div id="authGate" class="auth-wrap no-print">
-  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-    <h2>Sign In to Attempt Mock</h2>
+  <img src="legalstaan_minimalist_logo_1777012600581.png" alt="Logo">
+  <h2>Portal Login</h2>
+  <div class="auth-desc">Enter your credentials to access the premium mock series.</div>
+  <div class="auth-row">
+    <input id="nameInput" type="text" placeholder="Full Name">
+    <input id="emailInput" type="email" placeholder="Email Address">
+    <button id="loginBtn" class="btn" type="button">ACCESS MOCK TEST</button>
+  </div>
+  <div style="margin-top: 20px;">
     <button id="darkModeToggleAuth" class="mode-toggle" type="button">🌙 DARK MODE</button>
   </div>
-  <div>Enter your registered email. Access is role-based: master or user.</div>
-  <div class="auth-row">
-    <input id="nameInput" type="text" placeholder="Enter your full name" style="flex: 1 1 200px;">
-    <input id="emailInput" type="email" placeholder="Enter your email id" autocomplete="email">
-    <button id="loginBtn" class="btn" type="button">LOGIN</button>
-  </div>
-  <div id="authMsg" class="auth-msg"></div>
+  <div id="authMsg" class="auth-msg" style="margin-top: 15px; font-size: 13px;"></div>
 </div>
 
 <div id="appShell" class="app-hidden">
 <div class="top-utility no-print">
   <div style="display: flex; gap: 10px; align-items: center;">
     <div id="profilePill" class="profile-pill"></div>
-    <button id="darkModeToggleApp" class="mode-toggle" type="button">🌙 DARK</button>
+    <button id="darkModeToggleApp" class="mode-toggle" type="button">🌙 MODE</button>
   </div>
-  <div>
-    <button class="btn" type="button" id="submitBtn">SUBMIT TEST</button>
-    <button class="btn alt" type="button" id="myResultsBtn">MY RESULTS</button>
-    <button class="btn warn" type="button" id="logoutBtn">LOGOUT</button>
+  <div style="display: flex; gap: 10px;">
+    <button class="btn" type="button" id="submitBtn" style="width: auto; padding: 12px 20px;">SUBMIT TEST</button>
+    <button class="btn alt" type="button" id="myResultsBtn" style="width: auto; padding: 12px 20px;">RESULTS</button>
+    <button class="btn warn" type="button" id="logoutBtn" style="width: auto; padding: 12px 20px;">LOGOUT</button>
   </div>
 </div>
 
 <div class="cover">
-  <div style="text-align: center; margin-bottom: 30px;">
-    <img src="https://i.ibb.co/fz0BRgQG/GQ4-Ul-NMW.jpg" alt="Legalstaan Banner" style="max-width: 350px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-  </div>
-  <div class="brand">* JML MOCK EXAMINATION SERIES * FULL-LENGTH PAPER *</div>
-  <h1>IP-Joint Masters / LL.M.<br>Admission Test &mdash; MOCK</h1>
-  <div class="sub">Pattern-matched to JML 2024 PYQ &nbsp;&middot;&nbsp; <b class="accent-gold">Difficulty: Above Cut-off</b></div>
-  <div class="meta-row">
-    <div class="meta-pill"><label>QUESTIONS</label><span>100</span></div>
-    <div class="meta-pill"><label>MAX. MARKS</label><span>100</span></div>
-    <div class="meta-pill"><label>DURATION</label><span>120 min</span></div>
-    <div class="meta-pill"><label>NEGATIVE MARK</label><span>&minus;0.25</span></div>
-  </div>
-  <div class="structure-box">
-    <b>PAPER STRUCTURE</b><br>
-    <b>Section A &mdash; English</b> (Q.1 &ndash; Q.30): Reading Comprehension, Vocabulary (Synonyms, Antonyms, One-Word Substitution), Grammar (Correction, Error-spotting, Rearrangement, Reported Speech, Passive Voice, Prepositions), Idioms &amp; Phrases, Legal Latin.<br>
-    <b>Section B &mdash; Legal Reasoning</b> (Q.31 &ndash; Q.60): Principle-Facts, Assertion-Reason, Match-the-Following, Multi-Statement, across Contract, Tort, Criminal, Constitutional, Administrative, Evidence, Jurisprudence.<br>
-    <b>Section C &mdash; Intellectual Property Law</b> (Q.61 &ndash; Q.100): Patents, Trade Marks, Copyright, Designs, GI, International Treaties (Paris, PCT, TRIPS, Berne, Madrid), Enforcement.
-  </div>
-  <div class="instructions">
-    <b>INSTRUCTIONS:</b> Answer ALL questions. Each carries <b>1 mark</b>; <b>0.25</b> deducted per wrong answer. Indicate the MOST APPROPRIATE answer by selecting ONE of (A), (B), (C) or (D). More than one response for a question will be treated as a wrong answer. No clarification on the question paper can be sought.
+  <div class="cover-content">
+    <div class="brand">* JML MOCK EXAMINATION SERIES *</div>
+    <h1>IP-Joint Masters / LL.M.<br>Admission Test &mdash; MOCK</h1>
+    <div class="sub">Pattern-matched to JML 2024 PYQ &nbsp;&middot;&nbsp; <b class="accent-gold">Difficulty: Advanced</b></div>
+    <div class="meta-row">
+      <div class="meta-pill"><label>QUESTIONS</label><span>100</span></div>
+      <div class="meta-pill"><label>MAX. MARKS</label><span>100</span></div>
+      <div class="meta-pill"><label>DURATION</label><span>120 min</span></div>
+      <div class="meta-pill"><label>NEGATIVE</label><span>&minus;0.25</span></div>
+    </div>
+    <div class="structure-box">
+      <b>PAPER STRUCTURE</b><br>
+      <b>Section A &mdash; English</b> (Q.1 &ndash; Q.30): Vocabulary, Grammar, RC.<br>
+      <b>Section B &mdash; Legal Reasoning</b> (Q.31 &ndash; Q.60): Core Law Subjects.<br>
+      <b>Section C &mdash; IPR Law</b> (Q.61 &ndash; Q.100): Patents, TM, Copyright, GI.
+    </div>
   </div>
 </div>
 <div class="print-bar no-print">

@@ -2,7 +2,7 @@ const CACHE_NAME = 'legalstaan-mock-v1';
 const urlsToCache = [
   './',
   './index.html',
-  './Vocab.html',
+  './vocab.html',
   './manifest.json',
   './icon.svg'
 ];

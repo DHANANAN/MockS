@@ -1,0 +1,5 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target" : { "namespace": "android_app", "package_name": "app.netlify.legalstaan.twa",
+               "sha256_cert_fingerprints": ["CA:0C:04:23:C0:FC:FC:2C:92:56:54:17:74:6C:7F:03:26:78:56:36:4E:FA:33:B7:A3:5D:46:59:80:70:A1:F1"] }
+}]

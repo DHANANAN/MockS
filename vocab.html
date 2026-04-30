@@ -2586,24 +2586,34 @@ function showMasterPanel() {
   const panel = document.getElementById("masterPanel");
   const all = getAttempts();
 
-  if (all.length === 0) {
+  const allUsers = new Set([...USER_EMAILS, ...MASTER_EMAILS]);
+  const userData = Array.from(allUsers).map(email => {
+    const latest = getLatestAttemptForEmail(email);
+    return {
+      email,
+      role: getRoleByEmail(email),
+      latest
+    };
+  });
+
+  const attemptedUsers = userData.filter(u => u.latest);
+  const totalStudents = userData.length;
+  const studentsAttempted = attemptedUsers.length;
+
+  if (attemptedUsers.length === 0) {
     panel.innerHTML = '<h3>Confidential Master Analytics</h3><div>No attempts available yet.</div>';
     panel.classList.remove("app-hidden");
     return;
   }
 
-  const latestByEmail = {};
-  all.forEach((row) => {
-    latestByEmail[normalizeEmail(row.email)] = row;
-  });
-  const latestRows = Object.values(latestByEmail);
-  const avgScore = (latestRows.reduce((s, r) => s + Number(r.result.score), 0) / latestRows.length).toFixed(2);
-  const avgPercent = (latestRows.reduce((s, r) => s + Number(r.result.percent), 0) / latestRows.length).toFixed(2);
-  const aggregateStats = aggregateSubjectStats(latestRows);
+  const avgScore = (attemptedUsers.reduce((s, u) => s + Number(u.latest.result.score), 0) / attemptedUsers.length).toFixed(2);
+  const avgPercent = (attemptedUsers.reduce((s, u) => s + Number(u.latest.result.percent), 0) / attemptedUsers.length).toFixed(2);
+  const aggregateStats = aggregateSubjectStats(attemptedUsers.map(u => u.latest));
 
   let html = '<h3><span style="color:var(--red)">[CONFIDENTIAL]</span> Master Analytics & Student Performance</h3>';
   html += '<div class="results-grid">' +
-    '<div class="metric"><div class="k">Students Attempted</div><div class="v">' + latestRows.length + '</div></div>' +
+    '<div class="metric"><div class="k">Total Students</div><div class="v">' + totalStudents + '</div></div>' +
+    '<div class="metric"><div class="k">Students Attempted</div><div class="v">' + studentsAttempted + '</div></div>' +
     '<div class="metric"><div class="k">Total Attempts</div><div class="v">' + all.length + '</div></div>' +
     '<div class="metric"><div class="k">Avg Score</div><div class="v">' + avgScore + '</div></div>' +
     '<div class="metric"><div class="k">Avg Percent</div><div class="v">' + avgPercent + '%</div></div>' +
@@ -2621,11 +2631,21 @@ function showMasterPanel() {
           '</div>';
 
   html += '<table class="master-table" id="masterTable"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Last Attempt</th><th>Score</th><th>Correct</th><th>Incorrect</th><th>Percent</th></tr></thead><tbody>';
-  latestRows
-    .sort((a, b) => Number(b.result.score) - Number(a.result.score))
-    .forEach((row) => {
-      const name = row.name || row.email.split('@')[0];
-      html += '<tr><td><b>' + name + '</b></td><td>' + row.email + '</td><td>' + row.role + '</td><td>' + new Date(row.attemptedAt).toLocaleString() + '</td><td>' + row.result.score + '</td><td>' + row.result.correct + '</td><td>' + row.result.incorrect + '</td><td>' + row.result.percent + '%</td></tr>';
+  userData
+    .sort((a, b) => {
+      if (!a.latest && !b.latest) return 0;
+      if (!a.latest) return 1;
+      if (!b.latest) return -1;
+      return Number(b.latest.result.score) - Number(a.latest.result.score);
+    })
+    .forEach((user) => {
+      const name = (user.latest && user.latest.name) || user.email.split('@')[0];
+      const lastAttempt = user.latest ? new Date(user.latest.attemptedAt).toLocaleString() : 'Never';
+      const score = user.latest ? user.latest.result.score : 'N/A';
+      const correct = user.latest ? user.latest.result.correct : 'N/A';
+      const incorrect = user.latest ? user.latest.result.incorrect : 'N/A';
+      const percent = user.latest ? user.latest.result.percent + '%' : 'N/A';
+      html += '<tr><td><b>' + name + '</b></td><td>' + user.email + '</td><td>' + user.role + '</td><td>' + lastAttempt + '</td><td>' + score + '</td><td>' + correct + '</td><td>' + incorrect + '</td><td>' + percent + '</td></tr>';
     });
   html += '</tbody></table>';
 
